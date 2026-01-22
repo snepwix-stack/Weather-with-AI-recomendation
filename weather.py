@@ -8,8 +8,8 @@ WEATHER_KEY = ""
 
 #gemini key
 GEMINI_KEY = ""
-# your city
-CITY = ""
+#your city
+CITY = input("City: ")
 
 genai.configure(api_key=GEMINI_KEY)
 #ai model https://aistudio.google.com/
@@ -30,7 +30,7 @@ def get_weather():
         return f"Error API: {response.status_code}"
 
 def ask_gemini(info):
-    # promt = Your promt
+    #promt = Your promt
     promt = f"{info}{CITY}"
     response = model.generate_content(promt)
     return response.text

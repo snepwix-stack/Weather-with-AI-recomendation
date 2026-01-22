@@ -27,7 +27,7 @@ def get_weather():
     elif response.status_code == 401:
         return "ERROR_401"
     else:
-        return f"Ошибка API: {response.status_code}"
+        return f"Error API: {response.status_code}"
 
 def ask_gemini(info):
     # promt = Your promt

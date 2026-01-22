@@ -41,7 +41,7 @@ if weather_info == "ERROR_401":
     print("API_Error")
 else:
     print(f"✅ Data received: {weather_info}")
-    print("🤖 Gemini generting answer...")
+    print("🤖 Gemini generating answer...")
     advice = ask_gemini(weather_info)
     print("-" * 40)
     print(advice)

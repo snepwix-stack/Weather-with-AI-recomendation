@@ -3,11 +3,16 @@ from http.client import responses
 import requests
 import google.generativeai as genai
 
-WEATHER_KEY = "fc2f45776855270fcc2916b4624b2bd6"
-GEMINI_KEY = "AIzaSyACAKkghz5wEfpOzVrwgUKkNTAHjKaqjUI"
-CITY = "Semey"
+#weather api key
+WEATHER_KEY = ""
+
+#gemini key
+GEMINI_KEY = ""
+# your city
+CITY = ""
 
 genai.configure(api_key=GEMINI_KEY)
+#ai model https://aistudio.google.com/
 model = genai.GenerativeModel("gemini-3-flash-preview")
 
 def get_weather():
@@ -18,25 +23,25 @@ def get_weather():
         data = response.json()
         temp = data['main']['temp']
         desc = data['weather'][0]['description']
-        return f"Погода в Семее: {temp}°C, {desc}"
+        return f"Weather in {CITY}: {temp}°C, {desc}"
     elif response.status_code == 401:
         return "ERROR_401"
     else:
         return f"Ошибка API: {response.status_code}"
 
 def ask_gemini(info):
-    promt = f"Погода сегодня такая: {info}. Напиши очень краткий, но злой совет для жителя города Семей. Будь злым!"
+    # promt = Your promt
+    promt = f"{info}{CITY}"
     response = model.generate_content(promt)
     return response.text
 
 weather_info = get_weather()
 
 if weather_info == "ERROR_401":
-    print("❌ Погодный ключ еще не проснулся. Серверы OpenWeather его пока не видят.")
-    print("Давай подождем 20 минут. Но зато мы проверили — библиотеки стоят!")
+    print("API_Error")
 else:
-    print(f"✅ Данные получены: {weather_info}")
-    print("🤖 Gemini генерирует совет...")
+    print(f"✅ Data received: {weather_info}")
+    print("🤖 Gemini generting answer...")
     advice = ask_gemini(weather_info)
     print("-" * 40)
     print(advice)
